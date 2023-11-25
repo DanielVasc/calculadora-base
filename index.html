@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="calculadora">
+    <div id="resultado"></div>
+    <div id="botoes">
+        <button>7</button>
+        <button>8</button>
+        <button>9</button>
+        <button class="operador">/</button>
+
+        <button>4</button>
+        <button>5</button>
+        <button>6</button>
+        <button class="operador">*</button>
+
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button class="operador">-</button>
+
+        <button class="duplo">0</button>
+        <button>.</button>
+        <button class="operador">+</button>
+        <button class="operador alto">=</button>
+
+        <button class="operador">C</button>
+        <button class="operador">←</button>
+
+        <!-- Botões adicionados -->
+        <button class="funcao" onclick="lidarComCliqueDoBotao('sqrt')">sqrt</button>
+        <button class="funcao" onclick="lidarComCliqueDoBotao('x^2')">x^2</button>
+        <button class="funcao" onclick="lidarComCliqueDoBotao('x^y')">x^y</button>
+        <button class="funcao" onclick="lidarComCliqueDoBotao('sin')">sin</button>
+        <button class="funcao" onclick="lidarComCliqueDoBotao('cos')">cos</button>
+        <button class="funcao" onclick="lidarComCliqueDoBotao('tan')">tan</button>
+    </div>
+
+    <script src="script.js"></script>
+</div>
+
+</body>
+</html>
+
