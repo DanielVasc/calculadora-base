@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+
     function Clique(valor) {
         if (eNumero(valor) || valor === '.') {
             entradaAtual += valor;
@@ -45,18 +46,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         else if (valor === 'x^y') {
             lidarComOperador('^');
-        }
-
-        else if (valor === 'sin') {
-            FuncaoTrigonometrica('sin');
-        }
-
-        else if (valor === 'cos') {
-            FuncaoTrigonometrica('cos');
-        }
-
-        else if (valor === 'tan') {
-            FuncaoTrigonometrica('tan');
         }
     }
 
@@ -126,25 +115,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (entradaAtual !== '' || resultadoAnterior !== null) {
             const operando = entradaAtual !== '' ? parseFloat(entradaAtual) : resultadoAnterior;
             resultadoAnterior = Math.pow(operando, exp);
-            entradaAtual = '';
-            atualizarDisplay();
-        }
-    }
-
-    function FuncaoTrigonometrica(funcao) {
-        if (entradaAtual !== '' || resultadoAnterior !== null) {
-            const operando = entradaAtual !== '' ? parseFloat(entradaAtual) : resultadoAnterior;
-            switch (funcao) {
-                case 'sin':
-                    resultadoAnterior = Math.sin(operando);
-                    break;
-                case 'cos':
-                    resultadoAnterior = Math.cos(operando);
-                    break;
-                case 'tan':
-                    resultadoAnterior = Math.tan(operando);
-                    break;
-            }
             entradaAtual = '';
             atualizarDisplay();
         }
