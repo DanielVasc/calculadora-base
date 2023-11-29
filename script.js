@@ -9,12 +9,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     botoes.forEach(function (botao) {
         botao.addEventListener('click', function () {
-            lidarComCliqueDoBotao(botao.innerText);
+            Clique(botao.innerText);
             atualizarDisplay();
         });
     });
 
-    function lidarComCliqueDoBotao(valor) {
+    function Clique(valor) {
         if (eNumero(valor) || valor === '.') {
             entradaAtual += valor;
         }
@@ -24,23 +24,23 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         else if (valor === '=') {
-            lidarComIgual();
+            igual();
         }
 
         else if (valor === 'C') {
-            limparCalculadora();
+            limpar();
         }
 
         else if (valor === '←') {
-            apagarUltimoDigito();
+            apagarUltimo();
         }
 
         else if (valor === 'sqrt') {
-            calcularRaizQuadrada();
+            RaizQuadrada();
         }
 
         else if (valor === 'x^2') {
-            calcularPotenciacao(2);
+            Potenciacao(2);
         }
 
         else if (valor === 'x^y') {
@@ -48,15 +48,15 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         else if (valor === 'sin') {
-            calcularFuncaoTrigonometrica('sin');
+            FuncaoTrigonometrica('sin');
         }
 
         else if (valor === 'cos') {
-            calcularFuncaoTrigonometrica('cos');
+            FuncaoTrigonometrica('cos');
         }
 
         else if (valor === 'tan') {
-            calcularFuncaoTrigonometrica('tan');
+            FuncaoTrigonometrica('tan');
         }
     }
 
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function lidarComIgual() {
+    function igual() {
         if (entradaAtual !== '' || resultadoAnterior !== null) {
             const segundoOperando = entradaAtual !== '' ? parseFloat(entradaAtual) : primeiroOperando;
             if (operador && segundoOperando !== null) {
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         else {
                             alert("Não é possível dividir por zero!");
-                            limparCalculadora();
+                            limpar();
                             return;
                         }
                         break;
@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function calcularRaizQuadrada() {
+    function RaizQuadrada() {
         if (entradaAtual !== '' || resultadoAnterior !== null) {
             const operando = entradaAtual !== '' ? parseFloat(entradaAtual) : resultadoAnterior;
             resultadoAnterior = Math.sqrt(operando);
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function calcularPotenciacao(exp) {
+    function Potenciacao(exp) {
         if (entradaAtual !== '' || resultadoAnterior !== null) {
             const operando = entradaAtual !== '' ? parseFloat(entradaAtual) : resultadoAnterior;
             resultadoAnterior = Math.pow(operando, exp);
@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function calcularFuncaoTrigonometrica(funcao) {
+    function FuncaoTrigonometrica(funcao) {
         if (entradaAtual !== '' || resultadoAnterior !== null) {
             const operando = entradaAtual !== '' ? parseFloat(entradaAtual) : resultadoAnterior;
             switch (funcao) {
@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function limparCalculadora() {
+    function limpar() {
         entradaAtual = '';
         operador = '';
         primeiroOperando = null;
@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function () {
         atualizarDisplay();
     }
 
-    function apagarUltimoDigito() {
+    function apagarUltimo() {
         entradaAtual = entradaAtual.slice(0, -1);
         atualizarDisplay();
     }
