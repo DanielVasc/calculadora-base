@@ -45,7 +45,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         else if (valor === 'x^y') {
-            lidarComOperador('^');
+            lidarComOperador('^');lidarComOperador
+            lidarComOperador
+            lidarComOperador
         }
     }
 
@@ -54,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function eOperador(valor) {
-        return ['+', '-', '*', '/', '^'].includes(valor);
+        return ['+', '-', '*', '/', '^'].includes(valor);   
     }
 
     function lidarComOperador(valor) {
