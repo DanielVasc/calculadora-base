@@ -70,40 +70,44 @@ document.addEventListener('DOMContentLoaded', function () {
     function igual() {
         if (entradaAtual !== '' || resultadoAnterior !== null) {
             const segundoOperando = entradaAtual !== '' ? parseFloat(entradaAtual) : primeiroOperando;
+    
             if (operador && segundoOperando !== null) {
-                switch (operador) {
-                    case '+':
-                        resultadoAnterior = primeiroOperando + segundoOperando;
-                        break;
-                    case '-':
-                        resultadoAnterior = primeiroOperando - segundoOperando;
-                        break;
-                    case '*':
-                        resultadoAnterior = primeiroOperando * segundoOperando;
-                        break;
-                    case '/':
-
-                        if (segundoOperando !== 0) {
-                            resultadoAnterior = primeiroOperando / segundoOperando;
-                        }
-
-                        else {
-                            alert("Não é possível dividir por zero!");
-                            limpar();
-                            return;
-                        }
-                        break;
-                    case '^':
-                        resultadoAnterior = Math.pow(primeiroOperando, segundoOperando);
-                        break;
+                if (operador === '+') {
+                    resultadoAnterior = primeiroOperando + segundoOperando;
+                } 
+                
+                else if (operador === '-') {
+                    resultadoAnterior = primeiroOperando - segundoOperando;
+                } 
+                
+                else if (operador === '*') {
+                    resultadoAnterior = primeiroOperando * segundoOperando;
+                } 
+                
+                else if (operador === '/') {
+                   
+                    if (segundoOperando !== 0) {
+                        resultadoAnterior = primeiroOperando / segundoOperando;
+                    } 
+                    
+                    else {
+                        alert("Não é possível dividir por zero!");
+                        limpar();
+                        return;
+                    }
+                } 
+                
+                else if (operador === '^') {
+                    resultadoAnterior = Math.pow(primeiroOperando, segundoOperando);
                 }
+           
                 entradaAtual = '';
                 operador = '';
-                atualizarDisplay();
+                atualizarDisplay(); 
             }
         }
     }
-
+    
     function RaizQuadrada() {
         if (entradaAtual !== '' || resultadoAnterior !== null) {
             const operando = entradaAtual !== '' ? parseFloat(entradaAtual) : resultadoAnterior;
