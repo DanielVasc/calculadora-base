@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let operador = '';
     let primeiroOperando = null;
     let resultadoAnterior = null;
+    let ultimaOpreação = null;
 
     botoes.forEach(function (botao) {
         botao.addEventListener('click', function () {
@@ -64,6 +65,10 @@ document.addEventListener('DOMContentLoaded', function () {
             primeiroOperando = entradaAtual !== '' ? parseFloat(entradaAtual) : resultadoAnterior;
             operador = valor;
             entradaAtual = '';
+            ultimaOpreação = {
+                operacao: operador,
+                num1:primeiroOperando
+            }
         }
     }
 
@@ -72,6 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const segundoOperando = entradaAtual !== '' ? parseFloat(entradaAtual) : primeiroOperando;
     
             if (operador && segundoOperando !== null) {
+                
                 if (operador === '+') {
                     resultadoAnterior = primeiroOperando + segundoOperando;
                 } 
@@ -103,6 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
            
                 entradaAtual = '';
                 operador = '';
+                ultimaOpreação.resultado = resultadoAnterior;
                 atualizarDisplay(); 
             }
         }
@@ -141,5 +148,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function atualizarDisplay() {
         resultadoElemento.innerText = entradaAtual !== '' ? entradaAtual : resultadoAnterior !== null ? resultadoAnterior : '0';
+    
     }
 });
