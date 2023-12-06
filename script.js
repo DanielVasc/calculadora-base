@@ -15,6 +15,51 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // document.body.addEventListener("keypress", (e) => {
+    //     if (e.key == 1) {
+    //         resultadoElemento.innerText += "1";
+    //     }
+    //     if (e.key == 2) {
+    //         resultadoElemento.innerText += "2";
+    //     }
+    //     if (e.key == 3) {
+    //         resultadoElemento.innerText += "3";
+    //     }
+    //     if (e.key == 4) {
+    //         resultadoElemento.innerText += "4";
+    //     }
+    //     if (e.key == 5) {
+    //         resultadoElemento.innerText += "5";
+    //     }
+    //     if (e.key == 6) {
+    //         resultadoElemento.innerText += "6";
+    //     }
+    //     if (e.key == 7) {
+    //         resultadoElemento.innerText += "7";
+    //     }
+    //     if (e.key == 8) {
+    //         resultadoElemento.innerText += "8";
+    //     }
+    //     if (e.key == 9) {
+    //         resultadoElemento.innerText += "9";
+    //     }
+    //     if (e.key == 0) {
+    //         resultadoElemento.innerText += "0";
+    //     }
+    //     if (e.key == "+") {
+    //         resultadoElemento.innerText += "+";
+    //     }
+    //     if (e.key == "-") {
+    //         resultadoElemento.innerText += "-";
+    //     }
+    //     if (e.key == "*") {
+    //         resultadoElemento.innerText += "*";
+    //     }
+    //     if (e.key == "/") {
+    //         resultadoElemento.innerText += "/";
+    //     }
+    // })
+
 
     function Clique(valor) {
         if (eNumero(valor) || valor === '.') {
