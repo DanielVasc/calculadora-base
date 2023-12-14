@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let operador = '';
     let primeiroOperando = null;
     let resultadoAnterior = null;
-    let ultimaOpreação = null;
+    let operacaoConcluida = false;
 
     botoes.forEach(function (botao) {
         botao.addEventListener('click', function () {
@@ -15,86 +15,110 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // document.body.addEventListener("keypress", (e) => {
-    //     if (e.key == 1) {
-    //         resultadoElemento.innerText += "1";
-    //     }
-    //     if (e.key == 2) {
-    //         resultadoElemento.innerText += "2";
-    //     }
-    //     if (e.key == 3) {
-    //         resultadoElemento.innerText += "3";
-    //     }
-    //     if (e.key == 4) {
-    //         resultadoElemento.innerText += "4";
-    //     }
-    //     if (e.key == 5) {
-    //         resultadoElemento.innerText += "5";
-    //     }
-    //     if (e.key == 6) {
-    //         resultadoElemento.innerText += "6";
-    //     }
-    //     if (e.key == 7) {
-    //         resultadoElemento.innerText += "7";
-    //     }
-    //     if (e.key == 8) {
-    //         resultadoElemento.innerText += "8";
-    //     }
-    //     if (e.key == 9) {
-    //         resultadoElemento.innerText += "9";
-    //     }
-    //     if (e.key == 0) {
-    //         resultadoElemento.innerText += "0";
-    //     }
-    //     if (e.key == "+") {
-    //         resultadoElemento.innerText += "+";
-    //     }
-    //     if (e.key == "-") {
-    //         resultadoElemento.innerText += "-";
-    //     }
-    //     if (e.key == "*") {
-    //         resultadoElemento.innerText += "*";
-    //     }
-    //     if (e.key == "/") {
-    //         resultadoElemento.innerText += "/";
-    //     }
-    // })
-
+    document.addEventListener('keydown', function (event) {
+        const tecla = event.key;
+        if (tecla === 'Enter') {
+            Clique('=');
+        } 
+        
+        else if (tecla === 'Escape') {
+            Clique('C');
+        } 
+        
+        else if (tecla === 'Backspace') {
+            Clique('←');
+        } 
+        
+        else if (tecla === '.') {
+            Clique(tecla);
+        } 
+        
+        else if (tecla >= '0' && tecla <= '9') {
+            Clique(tecla);
+        } 
+        
+        else if (['+', '-', '*', '/'].includes(tecla)) {
+            Clique(tecla);
+        } 
+        
+        else if (tecla.toLowerCase() === 's') {
+            Clique('sin');
+        } 
+        
+        else if (tecla.toLowerCase() === 'c') {
+            Clique('cos');
+        } 
+        
+        else if (tecla.toLowerCase() === 't') {
+            Clique('tan');
+        } 
+        
+        else if (tecla.toLowerCase() === 'x') {
+            Clique('x^y');
+        }
+        atualizarDisplay();
+    });
 
     function Clique(valor) {
-        if (eNumero(valor) || valor === '.') {
-            entradaAtual += valor;
+        if (eOperador(valor) || valor === '.') {
+            if (entradaAtual === '' && !operacaoConcluida) {
+                return;
+            }
+
+            if (valor === '.' && entradaAtual.includes('.')) {
+                return;
+            }
         }
 
-        else if (eOperador(valor)) {
-            lidarComOperador(valor);
-        }
-
-        else if (valor === '=') {
-            igual();
-        }
-
-        else if (valor === 'C') {
+        if (operacaoConcluida && eNumero(valor)) {
             limpar();
         }
 
+        if (eOperador(valor)) {
+            if (entradaAtual === '') {
+                return;
+            }
+
+            if (operador !== '' && entradaAtual !== '') {
+                Igual();
+            }
+
+            lidarComOperador(valor);
+        } 
+        
+        else if (valor === '=') {
+            Igual();
+        } 
+        
+        else if (valor === 'C') {
+            limparCalculadora();
+        } 
+        
         else if (valor === '←') {
             apagarUltimo();
-        }
-
-        else if (valor === 'sqrt') {
+        } 
+        
+        else if (valor.toLowerCase() === 'sqrt') {
             RaizQuadrada();
-        }
-
-        else if (valor === 'x^2') {
+        } 
+        
+        else if (valor.toLowerCase() === 'x^2') {
             Potenciacao(2);
+        } 
+        
+        else if (valor.toLowerCase() === 'x^y') {
+            limpar('^');
+        } 
+        
+        else if (valor.toLowerCase() === 'sin' || valor.toLowerCase() === 'cos' || valor.toLowerCase() === 'tan') {
+            Trigonometrica(valor.toLowerCase());
+        } 
+        
+        else {
+            entradaAtual += valor;
         }
 
-        else if (valor === 'x^y') {
-            lidarComOperador('^');lidarComOperador
-            lidarComOperador
-            lidarComOperador
-        }
+        operacaoConcluida = false;
     }
 
     function eNumero(valor) {
@@ -102,70 +126,53 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function eOperador(valor) {
-        return ['+', '-', '*', '/', '^'].includes(valor);   
+        return ['+', '-', '*', '/', '^'].includes(valor);
     }
 
     function lidarComOperador(valor) {
-        if (entradaAtual !== '' || resultadoAnterior !== null) {
-            primeiroOperando = entradaAtual !== '' ? parseFloat(entradaAtual) : resultadoAnterior;
-            operador = valor;
-            entradaAtual = '';
-            ultimaOpreação = {
-                operacao: operador,
-                num1:primeiroOperando
+        primeiroOperando = entradaAtual !== '' ? parseFloat(entradaAtual) : resultadoAnterior;
+        operador = valor;
+        entradaAtual = '';
+    }
+
+    function Igual() {
+        if (operador && entradaAtual !== '') {
+            const segundoOperando = parseFloat(entradaAtual);
+            switch (operador) {
+                case '+':
+                    resultadoAnterior = primeiroOperando + segundoOperando;
+                    break;
+                case '-':
+                    resultadoAnterior = primeiroOperando - segundoOperando;
+                    break;
+                case '*':
+                    resultadoAnterior = primeiroOperando * segundoOperando;
+                    break;
+                case '/':
+                    if (segundoOperando !== 0) {
+                        resultadoAnterior = primeiroOperando / segundoOperando;
+                    } else {
+                        alert("Não é possível dividir por zero!");
+                        limparCalculadora();
+                        return;
+                    }
+                    break;
+                case '^':
+                    resultadoAnterior = Math.pow(primeiroOperando, segundoOperando);
+                    break;
             }
+            entradaAtual = '';
+            operador = '';
+            operacaoConcluida = true;
         }
     }
 
-    function igual() {
-        if (entradaAtual !== '' || resultadoAnterior !== null) {
-            const segundoOperando = entradaAtual !== '' ? parseFloat(entradaAtual) : primeiroOperando;
-    
-            if (operador && segundoOperando !== null) {
-                
-                if (operador === '+') {
-                    resultadoAnterior = primeiroOperando + segundoOperando;
-                } 
-                
-                else if (operador === '-') {
-                    resultadoAnterior = primeiroOperando - segundoOperando;
-                } 
-                
-                else if (operador === '*') {
-                    resultadoAnterior = primeiroOperando * segundoOperando;
-                } 
-                
-                else if (operador === '/') {
-                   
-                    if (segundoOperando !== 0) {
-                        resultadoAnterior = primeiroOperando / segundoOperando;
-                    } 
-                    
-                    else {
-                        alert("Não é possível dividir por zero!");
-                        limpar();
-                        return;
-                    }
-                } 
-                
-                else if (operador === '^') {
-                    resultadoAnterior = Math.pow(primeiroOperando, segundoOperando);
-                }
-           
-                entradaAtual = '';
-                operador = '';
-                ultimaOpreação.resultado = resultadoAnterior;
-                atualizarDisplay(); 
-            }
-        }
-    }
-    
     function RaizQuadrada() {
         if (entradaAtual !== '' || resultadoAnterior !== null) {
             const operando = entradaAtual !== '' ? parseFloat(entradaAtual) : resultadoAnterior;
             resultadoAnterior = Math.sqrt(operando);
             entradaAtual = '';
-            atualizarDisplay();
+            operacaoConcluida = true;
         }
     }
 
@@ -174,7 +181,26 @@ document.addEventListener('DOMContentLoaded', function () {
             const operando = entradaAtual !== '' ? parseFloat(entradaAtual) : resultadoAnterior;
             resultadoAnterior = Math.pow(operando, exp);
             entradaAtual = '';
-            atualizarDisplay();
+            operacaoConcluida = true;
+        }
+    }
+
+    function Trigonometrica(funcao) {
+        if (entradaAtual !== '' || resultadoAnterior !== null) {
+            const operando = entradaAtual !== '' ? parseFloat(entradaAtual) : resultadoAnterior;
+            switch (funcao) {
+                case 'sin':
+                    resultadoAnterior = Math.sin(operando);
+                    break;
+                case 'cos':
+                    resultadoAnterior = Math.cos(operando);
+                    break;
+                case 'tan':
+                    resultadoAnterior = Math.tan(operando);
+                    break;
+            }
+            entradaAtual = '';
+            operacaoConcluida = true;
         }
     }
 
@@ -183,6 +209,7 @@ document.addEventListener('DOMContentLoaded', function () {
         operador = '';
         primeiroOperando = null;
         resultadoAnterior = null;
+        operacaoConcluida = false;
         atualizarDisplay();
     }
 
@@ -191,8 +218,16 @@ document.addEventListener('DOMContentLoaded', function () {
         atualizarDisplay();
     }
 
+    function limparCalculadora() {
+        entradaAtual = '';
+        operador = '';
+        primeiroOperando = null;
+        resultadoAnterior = null;
+        operacaoConcluida = false;
+        atualizarDisplay();
+    }
+
     function atualizarDisplay() {
         resultadoElemento.innerText = entradaAtual !== '' ? entradaAtual : resultadoAnterior !== null ? resultadoAnterior : '0';
-    
     }
 });

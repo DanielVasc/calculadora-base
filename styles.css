@@ -44,9 +44,10 @@ button {
     cursor: pointer;
     transition: background-color 0.3s;
     width: 100%;
+    border-radius: 4px; 
 }
 
-button.operador {
+button.operador, button.funcao {
     background-color: #68748C;
     color: #fff;
 }
@@ -82,7 +83,7 @@ button.numero:hover {
 }
 
 @media (max-width: 400px) {
-    button.operador {
+    button.operador, button.funcao {
         grid-column: span 4;
     }
 }
